@@ -3,7 +3,6 @@ version: '3'
 services:
   datab:
     image: mysql:5.7
-    command: [--ignore-db-dir=lost+found]
     environment:
         MYSQL_ROOT_PASSWORD: password
         MYSQL_DATABASE: app
@@ -13,8 +12,10 @@ services:
     #   - "3307:3306"
     expose:
       - "3306"
-    # networks:
-    #   - application
+    networks:
+      employee:
+        ipv4_address: 172.21.0.2
+
   app: 
     build:
       context: .
@@ -24,19 +25,19 @@ services:
         - "8080:3000"
     depends_on:
         - datab
-    links:
-        - datab 
     environment:
       DB_USER: user
       DB_NAME: app
       DB_PASSWORD: password
       DB_HOST: db
-    # networks:
-    #   - application
+    networks:
+      employee:
+        ipv4_address: 172.21.0.3
 
-# networks:
-#   application:
-#     driver: bridge
-    # ipam:
-    #   config:
-    #     - gateway: 127.0.0.1
+networks:
+  employee:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.21.0.0/16
+         gateway: 172.21.0.1
