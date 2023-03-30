@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  db:
+  datab:
     image: mysql:5.7
     command: [--ignore-db-dir=lost+found]
     environment:
@@ -9,12 +9,12 @@ services:
         MYSQL_DATABASE: app
         MYSQL_USER: user
         MYSQL_PASSWORD: password
-    ports:
-      - "3307:3306"
-    # expose:
-    #   - "3306"
-    networks:
-      - application
+    # ports:
+    #   - "3307:3306"
+    expose:
+      - "3306"
+    # networks:
+    #   - application
   app: 
     build:
       context: .
@@ -23,20 +23,20 @@ services:
     ports: 
         - "8080:3000"
     depends_on:
-        - db
+        - datab
     links:
-        - db
+        - datab 
     environment:
       DB_USER: user
       DB_NAME: app
       DB_PASSWORD: password
       DB_HOST: db
-    networks:
-      - application
+    # networks:
+    #   - application
 
-networks:
-  application:
-    driver: bridge
+# networks:
+#   application:
+#     driver: bridge
     # ipam:
     #   config:
     #     - gateway: 127.0.0.1
