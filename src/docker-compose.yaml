@@ -1,15 +1,13 @@
 version: '3'
 
 services:
-  datab:
+  db:
     image: mysql:5.7
     environment:
-        MYSQL_ROOT_PASSWORD: password
-        MYSQL_DATABASE: app
         MYSQL_USER: user
+        MYSQL_DATABASE: app
+        MYSQL_ROOT_PASSWORD: password
         MYSQL_PASSWORD: password
-    # ports:
-    #   - "3307:3306"
     expose:
       - "3306"
     networks:
@@ -24,9 +22,9 @@ services:
     ports: 
         - "8080:3000"
     depends_on:
-        - datab
+        - db
     environment:
-      DB_USER: user
+      DB_USER: root
       DB_NAME: app
       DB_PASSWORD: password
       DB_HOST: db

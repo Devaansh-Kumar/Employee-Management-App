@@ -1,6 +1,6 @@
 FROM ruby:3.0.5
 
-# Installing yarn 2nd
+# Installing yarn
 RUN apt-get update && apt-get install -y \
   curl \
   build-essential \
