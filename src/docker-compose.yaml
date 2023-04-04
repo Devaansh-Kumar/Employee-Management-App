@@ -5,11 +5,10 @@ services:
     image: mysql:5.7
     container_name: mysql
     environment:
-        MYSQL_USER: user
-        MYSQL_DATABASE: app
-        MYSQL_ROOT_PASSWORD: password
-        MYSQL_PASSWORD: password
-        MYSQL_ROOT_HOST: '%'
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_PASSWORD: ${MYSQL_USER}
     expose:
       - "3306"
     networks:
@@ -29,10 +28,10 @@ services:
     depends_on:
         - db
     environment:
-      DB_USER: root
-      DB_NAME: app
-      DB_PASSWORD: password
-      DB_HOST: db
+      DB_USER: ${DB_USER}
+      DB_NAME: ${DB_NAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
     networks:
       employee:
         ipv4_address: 172.21.0.3
@@ -48,10 +47,10 @@ services:
     depends_on:
         - db
     environment:
-      DB_USER: root
-      DB_NAME: app
-      DB_PASSWORD: password
-      DB_HOST: db
+      DB_USER: ${DB_USER}
+      DB_NAME: ${DB_NAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
     networks:
       employee:
         ipv4_address: 172.21.0.4
@@ -67,10 +66,10 @@ services:
     depends_on:
         - db
     environment:
-      DB_USER: root
-      DB_NAME: app
-      DB_PASSWORD: password
-      DB_HOST: db
+      DB_USER: ${DB_USER}
+      DB_NAME: ${DB_NAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
     networks:
       employee:
         ipv4_address: 172.21.0.5
