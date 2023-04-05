@@ -5,98 +5,41 @@ services:
     image: mysql:5.7
     container_name: mysql
     environment:
-        MYSQL_USER: user
-        MYSQL_DATABASE: app
-        MYSQL_ROOT_PASSWORD: password
-        MYSQL_PASSWORD: password
-        MYSQL_ROOT_HOST: '%'
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_PASSWORD: ${MYSQL_USER}
     expose:
       - "3306"
-    networks:
-      employee:
-        ipv4_address: 172.21.0.2
     volumes:
       - dbdata:/var/lib/mysql
 
-  app_1: 
+  app: 
     build:
       context: .
       dockerfile: Dockerfile
     command: "bundle exec rails s -p 3000 -b 0.0.0.0"
-    container_name: app_1
     expose:
       - "3000"
     depends_on:
         - db
     environment:
-      DB_USER: root
-      DB_NAME: app
-      DB_PASSWORD: password
-      DB_HOST: db
-    networks:
-      employee:
-        ipv4_address: 172.21.0.3
-
-  app_2: 
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: "bundle exec rails s -p 3000 -b 0.0.0.0"
-    container_name: app_2
-    expose:
-      - "3000"
-    depends_on:
-        - db
-    environment:
-      DB_USER: root
-      DB_NAME: app
-      DB_PASSWORD: password
-      DB_HOST: db
-    networks:
-      employee:
-        ipv4_address: 172.21.0.4
-
-  app_3: 
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: "bundle exec rails s -p 3000 -b 0.0.0.0"
-    container_name: app_3
-    expose:
-      - "3000"
-    depends_on:
-        - db
-    environment:
-      DB_USER: root
-      DB_NAME: app
-      DB_PASSWORD: password
-      DB_HOST: db
-    networks:
-      employee:
-        ipv4_address: 172.21.0.5
+      DB_USER: ${DB_USER}
+      DB_NAME: ${DB_NAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
 
   reverse-proxy:
     image: nginx:1.22.1
     depends_on:
       - db
-      - app_1
-      - app_2
-      - app_3
+      - app
     volumes:
       - type: bind
         source: ./conf/
         target: /etc/nginx/conf.d/
     ports:
       - "8080:80"
-    networks:
-      - employee
 
 volumes:
   dbdata:
-
-networks:
-  employee:
-    driver: bridge
-    ipam:
-     config:
-       - subnet: 172.21.0.0/16
