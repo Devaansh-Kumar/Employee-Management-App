@@ -41,9 +41,9 @@ jobs:
 
       - name: set-variables
         run: |
-          set-env name=NUM1::$(jq `.num1` challenge.json)
-          set-env name=NUM2::$(jq `.num2` challenge.json)
-          set-env name=TOKEN::$(jq `.token` challenge.json)
+          echo ::set-env name=NUM1::$(jq `.num1` challenge.json)
+          echo ::set-env name=NUM2::$(jq `.num2` challenge.json)
+          echo ::set-env name=TOKEN::$(jq `.token` challenge.json)
           echo "$NUM1" && echo "$NUM2" && echo "$TOKEN" 
       
       - name: sum-numbers
