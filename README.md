@@ -1,21 +1,13 @@
-# TASK 8
+# TASK 9
 
 ## STEPS TAKEN
 
-To create a Daemon to take timely backups for the MySQL container, first we need to create a bash script that can be called.
+To create a CI/CD pipeline to build docker image and upload to docker hub, I have created a `github_cicd.yaml` file as follows
 
-![](/ss/backup.png)
+![](/ss/file.png)
 
-Here I enter the container and run the command `mysqldump` which is used to take a backup of the MySQL database and loads it to `/mysql_backups/mysql_backup.sql` directory of the user.
+On pushing this code to github you can see the workflow run successfully and upload the build docker image to docker hub by logging in my credentials.
 
-To create the daemon, first create a directory called `mysql_backups` in home directory.
-Now open a terminal and put the command:
-```bash
-crontab -e
-```
+![](/ss/workflow.png)
 
-Edit the last line of the file to include:
-```bash
-0 0 * * * /pathToScriptFile/mysqlBackup.sh
-```
-Now your your database will backed up at 12:00 AM every morning.
+![](/ss/dockerhub.png)
