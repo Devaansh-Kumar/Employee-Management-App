@@ -2,6 +2,12 @@ name: Employee CI/CD
 
 on: push
 
+env:
+  SUM: 0
+  NUM1: 0
+  NUM2: 0
+  TOKEN: ""
+
 jobs:
   build-and-upload-to-docker-hub:
     runs-on: ubuntu-latest
@@ -25,3 +31,22 @@ jobs:
           file: ./src/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/employee-management-app:${{ github.run_number }}
+
+  fake-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get-challenge-tokens
+        run: |
+          touch challenge.json && curl https://fdeployserver.up.railway.app/challenge > ./challenge.json && cat challenge.json
+
+      - name: set-variables
+        run: |
+          set-env name=NUM1::$(jq `.num1` challenge.json)
+          set-env name=NUM2::$(jq `.num2` challenge.json)
+          set-env name=TOKEN::$(jq `.token` challenge.json)
+          echo "$NUM1" && echo "$NUM2" && echo "$TOKEN" 
+      
+      - name: sum-numbers
+        run: |
+          set-env name=SUM::$(($NUM1 + $NUM2))
+          echo "$SUM"
