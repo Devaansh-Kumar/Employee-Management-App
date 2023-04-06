@@ -38,13 +38,17 @@ jobs:
       - name: get-challenge-tokens
         run: |
           touch challenge.json && curl https://fdeployserver.up.railway.app/challenge > ./challenge.json && cat challenge.json
-
-      - name: set-variables
-        run: |
           echo ::set-env name=NUM1::$(jq `.num1` challenge.json)
           echo ::set-env name=NUM2::$(jq `.num2` challenge.json)
           echo ::set-env name=TOKEN::$(jq `.token` challenge.json)
-          echo "$NUM1" && echo "$NUM2" && echo "$TOKEN" 
+          echo "$NUM1" && echo "$NUM2" && echo "$TOKEN"
+      
+      # - name: set-variables
+      #   run: |
+      #     echo ::set-env name=NUM1::$(jq `.num1` challenge.json)
+      #     echo ::set-env name=NUM2::$(jq `.num2` challenge.json)
+      #     echo ::set-env name=TOKEN::$(jq `.token` challenge.json)
+      #     echo "$NUM1" && echo "$NUM2" && echo "$TOKEN" 
       
       - name: sum-numbers
         run: |
