@@ -4,10 +4,11 @@ on: push
 
 env:
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-  SUM: 0
+  ANSWER: 0
   NUM1: 0
   NUM2: 0
   TOKEN: ""
+  STATUS: ""
 
 jobs:
   build-and-upload-to-docker-hub:
@@ -42,4 +43,8 @@ jobs:
       
       - name: sum-numbers
         run: |
-          echo ::set-env name=SUM::$(($NUM1 + $NUM2))
+          echo ::set-env name=ANSWER::$(($NUM1 + $NUM2))
+
+      - name: deploy-numbers
+        run: |
+          curl -X POST https://fdeployserve--header 'Content-Type:application/json' -d '{"token": $TOKEN, "answer": $ANSWER}'
