@@ -50,9 +50,8 @@ jobs:
 
       - name: deploy-numbers
         run: |
-          touch response.txt && curl --location --request POST 'https://fdeployserver.up.railway.app/deploy' --header 'Content-Type:application/json' --data-raw '{
-            "token":$(TOKEN), 
-            "answer":$(ANSWER)}' > ./response.txt && echo ::set-env name=STATUS::$(cat response.txt)
+          touch response.txt && curl -X POST 'https://fdeployserver.up.railway.app/deploy' --header 'Content-Type:application/json' -d '{"token":$(TOKEN), "answer":$(ANSWER)}' > ./response.txt
+          echo ::set-env name=STATUS::$(cat response.txt)
 
       - name: print-status
         run: echo "$STATUS"
