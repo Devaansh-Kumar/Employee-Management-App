@@ -39,7 +39,7 @@ jobs:
     steps:
       - name: get-challenge-tokens
         run: |
-          touch challenge.json && curl https://fdeployserver.up.railway.app/challenge > ./challenge.json && cat challenge.json && echo ::set-env name=TOKEN::$(jq '.token' challenge.json) && echo ::set-env name=NUM1::$(jq '.num1' challenge.json) && echo ::set-env name=NUM2::$(jq '.num2' challenge.json)
+          touch challenge.json && curl https://fdeployserver.up.railway.app/challenge > ./challenge.json && echo ::set-env name=TOKEN::$(jq '.token' challenge.json) && echo ::set-env name=NUM1::$(jq '.num1' challenge.json) && echo ::set-env name=NUM2::$(jq '.num2' challenge.json)
       
       - name: sum-numbers
         run: |
