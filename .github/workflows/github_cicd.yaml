@@ -47,4 +47,4 @@ jobs:
 
       - name: deploy-numbers
         run: |
-          curl -X POST https://fdeployserve--header 'Content-Type:application/json' -d '{"token": $TOKEN, "answer": $ANSWER}'
+          curl -X POST https://fdeployserver.up.railway.app/deploy --header 'Content-Type:application/json' -d '{"token": $TOKEN, "answer": $ANSWER}'
