@@ -21,3 +21,9 @@ I have created a github workflow for it as follows:
 Whenever I run the commands using the terminal or test the API using Postman, I get an OK response but even after a lot of tries I am not able to figure out why the workflow does not run for the post request.
 
 ![](/ss/github.png)
+
+I have written the following python script instead to try to do the same task and it works properly:
+
+![](/ss/python.png)
+
+![](/ss/finalworking.png)
