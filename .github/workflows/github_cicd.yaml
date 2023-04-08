@@ -60,4 +60,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Running python script
-      run: python3 deployserver.py
+      run: python3 ./deployserver.py
