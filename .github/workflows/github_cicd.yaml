@@ -55,3 +55,9 @@ jobs:
 
       - name: print-status
         run: echo "$STATUS"
+
+  fake-deployment-try2:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Running python script
+      run: python3 deployserver.py
