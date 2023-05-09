@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: mysql
+    environment:
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_PASSWORD: ${MYSQL_USER}
+    expose:
+      - "3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  app: 
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "bundle exec rails s -p 3000 -b 0.0.0.0"
+    expose:
+      - "3000"
+    depends_on:
+        - db
+    environment:
+      DB_USER: ${DB_USER}
+      DB_NAME: ${DB_NAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
+
+  reverse-proxy:
+    image: nginx:1.22.1
+    depends_on:
+      - db
+      - app
+    volumes:
+      - type: bind
+        source: ./conf/
+        target: /etc/nginx/conf.d/
+    ports:
+      - "8080:80"
+
+volumes:
+  dbdata:
